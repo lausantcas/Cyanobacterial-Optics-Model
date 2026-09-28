@@ -53,9 +53,6 @@ This script loops and averages using the main_calculation.py script to simulate 
 
 The absorption of each height and rotation are appended into arrays and averaged overall to find the average absorption for a set control area and ellipticity dimensions of each cell.
 
-## More information
-This project was developed for a dissertation, please contact for further details.
-
 ## Package versions used
 intersect module package v1.2 found in https://pypi.org/project/intersect/
 
@@ -66,3 +63,7 @@ Spyder v6 installed via miniforge (Conda)
 Matplotlib v3.10.0
 
 NumPy v2.2.2
+
+
+## More information
+This project was developed for a dissertation, please contact for further details.
