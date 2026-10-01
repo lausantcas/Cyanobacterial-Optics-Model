@@ -3,7 +3,8 @@ Cyanobacteria have been found to elongate under low irradiance conditions. The m
 
 The elongation in this model can be controlled in a set parameter (k), and calculates the total absorbance by a cell when a collimated light ray intersects it. A second script then also averages results across all rotations (0–360°) and vertical offsets to approximate diffuse-light conditions and produces comparison plots versus ellipticity (ratio ax/ay).
 
-The model tracks a collimated incidence light ray as it intersects the boundary of the cell, reflecting and refracting according to Fresnel’s equations and Snell’s Law, in vector form. The ray is attenuated inside the cell via the Beer–Lambert law as it crosses the interior of the cell until it once again intersects the internal membrane surface of the cell. The process of reflection and refraction then repeats, taking into account the change in refractive indices of each medium, and this new point of intersection now becomes the new point of origin for the next iteration. \
+The model tracks a collimated incidence light ray as it intersects the boundary of the cell, reflecting and refracting according to Fresnel’s equations and Snell’s Law, in vector form. The ray is attenuated inside the cell via the Beer–Lambert law as it crosses the interior of the cell until it once again intersects the internal membrane surface of the cell. The process of reflection and refraction then repeats, taking into account the change in refractive indices of each medium, and this new point of intersection now becomes the new point of origin for the next iteration.
+
 This is then overall looped until the minimum absorption condition is met, which is when the intensity flux encoded on the ray falls below this set minimum absorption parameter. Total absorption by the cell is computed as the fraction of the incident intensity that is lost inside the cell across multiple internal passes. 
 
 ## What the code does
