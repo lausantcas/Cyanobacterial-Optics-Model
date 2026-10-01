@@ -1,17 +1,19 @@
 # Cyanobacterial Optics
-Cyanobacteria have been found to elongate under low irradiance conditions. The model found in this repository treats a single cyanobacterial cell as a 2D circle or ellipse, of which the elongation can be controlled in a set parameter (k), and calculates the total absorbance by a cell when a collimated light ray intersects it. A second script also averages results across all rotation (0–360°) and vertical offsets to approximate diffuse-light conditions and produces comparison plots versus ellipticity (ratio ax/ay).
+Cyanobacteria have been found to elongate under low irradiance conditions. The model found in this repository treats a single cyanobacterial cell as a 2D circle or ellipse in order to test the relation of this elongation to photosynthetic efficiency. 
 
-The model tracks a collimated incidence light ray as it intersects the boundary of the cell, reflecting and refracting according to Fresnel’s equations and Snell’s Law, in vector form. The ray is also attenuated inside the cell via the Beer–Lambert law until it once again intersects the internal surface of the cell. The process of reflection and refraction then repeats, taking into account the change in refractive indices of each medium, and this new point of intersection is the new point of origin for the next iteration. This is then overall looped until the minimum absorption condition is met, which is when the intensity flux encoded on the ray falls below this set minimum absorption parameter. Total absorption by the cell is computed as the fraction of the incident intensity that is lost inside the cell across multiple internal passes. 
+The elongation in this model can be controlled in a set parameter (k), and calculates the total absorbance by a cell when a collimated light ray intersects it. A second script then also averages results across all rotations (0–360°) and vertical offsets to approximate diffuse-light conditions and produces comparison plots versus ellipticity (ratio ax/ay).
+
+The model tracks a collimated incidence light ray as it intersects the boundary of the cell, reflecting and refracting according to Fresnel’s equations and Snell’s Law, in vector form. The ray is attenuated inside the cell via the Beer–Lambert law as it crosses the interior of the cell until it once again intersects the internal membrane surface of the cell. The process of reflection and refraction then repeats, taking into account the change in refractive indices of each medium, and this new point of intersection now becomes the new point of origin for the next iteration. This is then overall looped until the minimum absorption condition is met, which is when the intensity flux encoded on the ray falls below this set minimum absorption parameter. Total absorption by the cell is computed as the fraction of the incident intensity that is lost inside the cell across multiple internal passes. 
 
 ## What the code does
 ### 1. Define cell geometry
-The cell is a rotated ellipse with semi-axes (ax, ay), and rotation phi. The parametric form is used to locate point on the boundary and to handle rotation cleanly.
+The cell is a rotated ellipse with semi-axes (ax, ay), and rotation of angle phi. The parametric form is used to locate the point on the boundary and to handle rotation cleanly.
 
 ### 2. Cast a light ray
 A directed ray with origin r0​ and unit direction vi is traced to the first boundary intersection. The correct intersection is selected by magnitude and direction filters.
 
 ### 3. Compute the surface normal
-The unit tangent at the hit point is estimated, the the outward normal is chosen based on quadrant logic to ensure it points away from the cell.
+The unit tangent at the hit point is estimated, the outward normal is chosen based on quadrant logic to ensure it points away from the cell.
 
 ### 4. Apply interface optics
 Using the Snell's Law in vector form to compute the transmitted vector; using Fresnel equations to split the incident ray intensity into reflected and transmitted s and p components, then summed for total flux.
@@ -26,7 +28,7 @@ Absorption = (incident intensity − sum of all intensities transmitted to the o
 Repeat steps 1–6 across all rotations and ray heights, average per geometry, and plot absorption vs ellipticity; this reproduces the rising trend with increasing ellipticity ratio of ax/ay.
 
 ## Results found
-Circles vs ellipses: circles do not exhibit total internal reflection (TIR) no matter the height of the ray due to the geometry; ellipses do at certain rotations and ray heights, which helps retain light internally and increases absorption.
+Circles vs ellipses: circles do not exhibit total internal reflection (TIR) no matter the height or angle/direction of the incident ray due to their geometry; ellipses however, do at certain rotations and ray heights, which helps retain light internally and increases photosynthetic absorption.
 
 <img width="500" height="222" alt="image" src="https://github.com/user-attachments/assets/4772cbcc-91a8-4601-a729-c34c0606ee36" />
 
@@ -38,18 +40,18 @@ Ellipticity trend: holding area constant (1 μm²), average absorption increases
 
 ## What each code file correlates to
 ### normal_function.py and refract_normal_function.py
-The normal_function.py script carries out step 3 from the above section, which computes the surface normal at the first intersection point where the ray intersects the cell and the point of intersection of interest is the first.
+The normal_function.py script carries out step 3 from the above section, which computes the surface normal at the first intersection point where the ray intersects the cell and the point of intersection of interest is the first along the vector.
 
-However, once the ray is looped and bounced around the inside of the cell, it is in interest to maintain the first intersection point as the origin coordinates, and so the normal calculation for the following intersection point means that the second intersection of this ray is the one of interest now. This is calculated in the script found within refract_normal_function.py
+However, once the ray is looped and it bounces around the inside of the cell, it is in interest to maintain the first intersection point as the origin coordinates. The normal calculation for the following intersection point is now utilised as and the second intersection of this ray is the one of interest now as the first is our origin. This is calculated in the script found within refract_normal_function.py
 
 ### main_calculation.py
-This script carries out steps 1-6, calling upon the normal_function.py and refract_normal_function.py scripts for step 4.
+This script carries out steps 1-6 (see above), calling upon the normal_function.py and refract_normal_function.py scripts for step 4.
 
 ### average_absorbances_loop_plotting.py
 This script loops and averages using the main_calculation.py script to simulate diffuse-light conditions. It does this by looping the main_calculation.py file and changing the following parameters:
-- The ellipticity ratio in steps predetermined in parameter k.
+- The ellipticity ratio in increments predetermined in parameter k.
 - The height at which a horizontal incident collimated light ray intersects the cell in constant steps within the loop, this is determined from a minimum start to a maximum, with height h.
-- The rotation angle of the cell determined as phi, in constant steps determined by the user.
+- The rotation angle of the cell determined as phi, in constant increments determined by the user.
 
 The absorption of each height and rotation are appended into arrays and averaged overall to find the average absorption for a set control area and ellipticity dimensions of each cell.
 
