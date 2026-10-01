@@ -6,8 +6,8 @@ Created on Sat Feb 22 19:28:54 2025
 """
 
 import numpy as np
-from normal_func import normal
-from refract_normal_func import refract_normal
+from normal_function import normal
+from refract_normal_function import refract_normal
 import matplotlib.pyplot as plt
 import math
 
