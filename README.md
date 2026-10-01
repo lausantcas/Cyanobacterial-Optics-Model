@@ -57,6 +57,7 @@ The absorption of each height and rotation are appended into arrays and averaged
 
 ## Package versions used
 intersect module package v1.2 found in https://pypi.org/project/intersect/
+  !This version must be used as the code is no longer maintained and will not work with the latest release of the package.
 
 Python v3.13.0 installed via miniforge (Conda)
 
