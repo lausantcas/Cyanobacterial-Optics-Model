@@ -1,5 +1,5 @@
 # Cyanobacterial Optics
-Cyanobacteria have been found to elongate under low irradiance conditions. The model found in this repository treats a single cyanobacterial cell as a 2D circle or ellipse in order to test the relation of this elongation to photosynthetic efficiency. 
+Certain species of cyanobacteria have been found to elongate under low irradiance conditions. The model found in this repository treats a single cyanobacterial cell as a 2D circle or ellipse in order to test the relation of this elongation to photosynthetic efficiency. 
 
 The elongation in this model can be controlled in a set parameter (k), and calculates the total absorbance by a cell when a collimated light ray intersects it. A second script then also averages results across all rotations (0–360°) and vertical offsets to approximate diffuse-light conditions and produces comparison plots versus ellipticity (ratio ax/ay).
 
