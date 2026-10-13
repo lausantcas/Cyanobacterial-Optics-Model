@@ -69,8 +69,5 @@ Matplotlib v3.10.0
 
 NumPy v2.2.2
 
-##More information
-This project was developed for a dissertation, please contact for further details.
-
 ## More information
 This project was developed for a dissertation, please contact for further details.
